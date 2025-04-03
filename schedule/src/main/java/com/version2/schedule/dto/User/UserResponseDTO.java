@@ -1,14 +1,16 @@
 package com.version2.schedule.dto.User;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
+@RequiredArgsConstructor
 public class UserResponseDTO {
-    private Integer id;
-    private String username;
-    private String email;
-    private LocalDate createdAt;
-    private LocalDate updatedAt;
+    private final Integer id;
+    private final String username;
+    private final String email;
+    private final LocalDateTime createdAt;
+    private final LocalDateTime updatedAt;
 }
