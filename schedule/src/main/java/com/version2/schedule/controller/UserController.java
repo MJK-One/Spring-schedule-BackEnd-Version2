@@ -38,8 +38,11 @@ public class UserController {
         return new ResponseEntity<>(userResponseDTO, HttpStatus.OK);
     }
 
-    @PutMapping("/password/{userId}")
-    public ResponseEntity<UpdatepasswordResponseDto> updatePassword(@PathVariable Integer userId, @RequestBody UpdatePasswordRequestDto requestDto) {
+    @PutMapping("/{userId}")
+    public ResponseEntity<UpdatepasswordResponseDto> updatePassword(
+            @PathVariable Integer userId,
+            @RequestBody UpdatePasswordRequestDto requestDto
+    ) {
         UpdatepasswordResponseDto updatepasswordResponseDto = userService.updatePassword(userId, requestDto);
         return new ResponseEntity<>(updatepasswordResponseDto, HttpStatus.OK);
     }
@@ -50,8 +53,11 @@ public class UserController {
         return new ResponseEntity<>(loginResponseDto, HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{userId}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Integer userId, @RequestBody DeleteUserRequestDto requestDto) {
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<Void> deleteUser(
+            @PathVariable Integer userId,
+            @RequestBody DeleteUserRequestDto requestDto
+    ) {
         userService.deleteUser(userId, requestDto);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

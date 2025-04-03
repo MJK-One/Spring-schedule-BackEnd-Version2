@@ -1,6 +1,7 @@
 package com.version2.schedule.service;
 
 import com.version2.schedule.Config.PasswordEncoder;
+import com.version2.schedule.validator.UserValidator;
 import com.version2.schedule.dto.User.DeleteUserRequestDto;
 import com.version2.schedule.dto.User.Login.LoginRequestDto;
 import com.version2.schedule.dto.User.Login.LoginResponeDto;
@@ -21,6 +22,7 @@ import org.springframework.web.server.ResponseStatusException;
 public class UserService {
     private final UserRepositroy userRepository;
     private final PasswordEncoder passwordEncoder; // PasswordEncoder 주입
+    private final UserValidator userValidator;
 
     @Transactional
     public LoginResponeDto login(LoginRequestDto requestDto) {
@@ -55,8 +57,7 @@ public class UserService {
     @Transactional(readOnly = true)
     public UserResponseDTO findByUserId(Integer userId) {
         // 회원 ID 유무 확인
-        User findUser = userRepository.findByUserId(userId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+        User findUser = userValidator.validateUserExists(userId);
 
         return new UserResponseDTO(findUser.getUserId(), findUser.getUsername(), findUser.getEmail(), findUser.getCreatedAt(), findUser.getUpdatedAt());
     }
@@ -64,8 +65,7 @@ public class UserService {
     @Transactional
     public UpdatepasswordResponseDto updatePassword(Integer userId, UpdatePasswordRequestDto requestDto) {
         // 회원 ID 유무 확인
-        User updateUser = userRepository.findByUserId(userId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+        User updateUser = userValidator.validateUserExists(userId);
 
         // 기존 비밀번호 일치 확인
         if (!passwordEncoder.matches(requestDto.getOldPassword(), updateUser.getPassword())) {
@@ -85,8 +85,7 @@ public class UserService {
     @Transactional
     public void deleteUser(Integer userId, DeleteUserRequestDto requestDto) {
         // 회원 유무 ID 확인
-        User deleteUser = userRepository.findByUserId(userId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+        User deleteUser = userValidator.validateUserExists(userId);
 
         // 비밀번호 매칭 확인
         if (!passwordEncoder.matches(requestDto.getPassword(), deleteUser.getPassword())) {
