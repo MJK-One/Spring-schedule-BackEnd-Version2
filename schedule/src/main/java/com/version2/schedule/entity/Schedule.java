@@ -1,14 +1,13 @@
 package com.version2.schedule.entity;
 
-import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.Setter;
+
+import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Getter
-@Setter
 @Entity
 @Table(name = "schedule", schema = "schedule_management")
 public class Schedule {
@@ -29,10 +28,9 @@ public class Schedule {
 
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "createdAt")
-    private Instant createdAt;
+    private LocalDateTime createdAt;
 
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "updatedAt")
-    private Instant updatedAt;
-
+    private LocalDateTime updatedAt;
 }
