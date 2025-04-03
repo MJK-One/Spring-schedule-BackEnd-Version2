@@ -12,8 +12,9 @@ import java.time.LocalDateTime;
 @Table(name = "schedule", schema = "schedule_management")
 public class Schedule {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private String id;
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
