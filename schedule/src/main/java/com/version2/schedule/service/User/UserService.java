@@ -22,7 +22,7 @@ public class UserService {
         // 이메일 중복 방지
         userRepository.findByEmail(email)
                 .ifPresent(user -> {
-                    throw new IllegalArgumentException("Email already in use");
+                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Email already in use");
                 });
 
         User user = new User(username, email, password);
@@ -48,7 +48,7 @@ public class UserService {
 
         // 기존 비밀번호 일치 확인
         if (!updateUser.getPassword().equals(requestDto.getOldPassword())) {
-            throw new IllegalArgumentException("기존 비밀번호가 일치하지 않습니다.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Password does not match.");
         }
 
         // 새로운 비밀번호 설정
