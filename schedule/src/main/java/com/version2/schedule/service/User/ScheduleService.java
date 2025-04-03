@@ -1,15 +1,18 @@
 package com.version2.schedule.service.User;
 
 import com.version2.schedule.dto.Schedule.ScheduleResponeDto;
+import com.version2.schedule.dto.Schedule.UpdateScheduleRequestDto;
 import com.version2.schedule.entity.Schedule;
 import com.version2.schedule.entity.User;
-import com.version2.schedule.repository.User.ScheduleRepository;
-import com.version2.schedule.repository.User.UserRepositroy;
+import com.version2.schedule.repository.ScheduleRepository;
+import com.version2.schedule.repository.UserRepositroy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -18,6 +21,7 @@ public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
     private final UserRepositroy userRepository;
 
+    @Transactional
     public Schedule createSchedule(Integer userId, String title, String content) {
         // 회원 ID 유무 확인
         User findUser = userRepository.findByUserId(userId)

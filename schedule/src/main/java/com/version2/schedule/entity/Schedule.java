@@ -5,6 +5,9 @@ import lombok.Getter;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
@@ -12,6 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "schedule", schema = "schedule_management")
+@EntityListeners(AuditingEntityListener.class)
 public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,11 +33,11 @@ public class Schedule {
     @Column(name = "content")
     private String content;
 
-    @ColumnDefault("CURRENT_TIMESTAMP")
-    @Column(name = "createdAt")
+    @CreatedDate
+    @Column(name = "createdAt", updatable = false)
     private LocalDateTime createdAt;
 
-    @ColumnDefault("CURRENT_TIMESTAMP")
+    @LastModifiedDate
     @Column(name = "updatedAt")
     private LocalDateTime updatedAt;
 
@@ -41,5 +45,11 @@ public class Schedule {
         this.userId = userId;
         this.title = title;
         this.content = content;
+    }
+
+    // 일정 변경 메서드
+    public void changeSchedule(String newTitle, String newContent) {
+        this.title = newTitle;
+        this.content = newContent;
     }
 }

@@ -5,7 +5,7 @@ import com.version2.schedule.dto.User.UpdatePassword.UpdatePasswordRequestDto;
 import com.version2.schedule.dto.User.UpdatePassword.UpdatepasswordResponseDto;
 import com.version2.schedule.dto.User.UserResponseDTO;
 import com.version2.schedule.entity.User;
-import com.version2.schedule.repository.User.UserRepositroy;
+import com.version2.schedule.repository.UserRepositroy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.version2.schedule.repository.User;
+package com.version2.schedule.repository;
 
 import com.version2.schedule.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
