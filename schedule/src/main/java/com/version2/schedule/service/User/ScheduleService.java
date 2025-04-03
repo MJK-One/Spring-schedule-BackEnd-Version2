@@ -36,7 +36,7 @@ public class ScheduleService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
 
         // 회원 ID 일정 존재 유무 확인
-        List<Schedule> findSchedules = scheduleRepository.findByUserId(findUser); // List<Schedule>로 변경
+        List<Schedule> findSchedules = scheduleRepository.findByUserId(findUser);
 
         if (findSchedules.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Schedule not found for this user");
