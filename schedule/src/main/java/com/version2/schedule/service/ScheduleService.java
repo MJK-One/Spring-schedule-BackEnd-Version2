@@ -1,4 +1,4 @@
-package com.version2.schedule.service.User;
+package com.version2.schedule.service;
 
 import com.version2.schedule.dto.Schedule.ScheduleResponeDto;
 import com.version2.schedule.dto.Schedule.UpdateScheduleRequestDto;

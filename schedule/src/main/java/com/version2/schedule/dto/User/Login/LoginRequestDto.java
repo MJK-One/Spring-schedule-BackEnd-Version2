@@ -1,4 +1,4 @@
-package com.version2.schedule.dto.User;
+package com.version2.schedule.dto.User.Login;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
