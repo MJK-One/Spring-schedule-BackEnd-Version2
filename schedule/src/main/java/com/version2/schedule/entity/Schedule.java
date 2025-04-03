@@ -3,11 +3,13 @@ package com.version2.schedule.entity;
 import lombok.Getter;
 
 import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDateTime;
 
 @Getter
+@NoArgsConstructor
 @Entity
 @Table(name = "schedule", schema = "schedule_management")
 public class Schedule {
@@ -18,7 +20,7 @@ public class Schedule {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
-    private User user;
+    private User userId;
 
     @Column(name = "title", nullable = false)
     private String title;
@@ -34,4 +36,10 @@ public class Schedule {
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "updatedAt")
     private LocalDateTime updatedAt;
+
+    public Schedule(User userId, String title, String content) {
+        this.userId = userId;
+        this.title = title;
+        this.content = content;
+    }
 }

@@ -1,4 +1,4 @@
-package com.version2.schedule.controller.User;
+package com.version2.schedule.controller;
 
 import com.version2.schedule.dto.User.SignUp.SignupRequestDto;
 import com.version2.schedule.dto.User.SignUp.SignupResponseDto;
