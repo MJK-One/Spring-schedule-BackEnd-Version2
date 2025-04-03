@@ -23,7 +23,6 @@ public class ScheduleService {
         User findUser = userRepository.findByUserId(userId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
 
-        // Schedule 객체 생성 및 User 정보 설정
         Schedule schedule = new Schedule(findUser, title, content);
         Schedule savedSchedule = scheduleRepository.save(schedule);
 
