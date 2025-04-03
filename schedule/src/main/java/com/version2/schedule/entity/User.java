@@ -3,6 +3,7 @@ package com.version2.schedule.entity;
 import lombok.Getter;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -43,5 +44,10 @@ public class User {
         this.username = username;
         this.email = email;
         this.password = password;
+    }
+
+    // 비밀번호 변경 메서드
+    public void changePassword(String newPassword) {
+        this.password = newPassword;
     }
 }
