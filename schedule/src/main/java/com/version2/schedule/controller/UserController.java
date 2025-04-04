@@ -92,7 +92,7 @@ public class UserController {
     }
 }
 
-
+// 세션 적용 전 코드
 //import com.version2.schedule.dto.User.DeleteUserRequestDto;
 //import com.version2.schedule.dto.User.Login.LoginRequestDto;
 //import com.version2.schedule.dto.User.Login.LoginResponeDto;
