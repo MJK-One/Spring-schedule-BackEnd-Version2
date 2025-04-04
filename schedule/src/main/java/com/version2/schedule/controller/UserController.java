@@ -25,7 +25,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity<SignupResponseDto> signup(@Valid @RequestBody SignupRequestDto requestDto) {
+    public ResponseEntity<?> signup(@Valid @RequestBody SignupRequestDto requestDto) {
         try {
             SignupResponseDto signupResponseDto = userService.signUpUser(
                     requestDto.getUsername(),
@@ -36,32 +36,46 @@ public class UserController {
         } catch (Exception e) {
             // 예외 처리 (예: 중복된 이메일)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(null); //적절한 응답으로 수정
+                    .body(ErrorResponse.of(HttpStatus.BAD_REQUEST, e.getMessage()));
         }
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<UserResponseDTO> findByUserId(@PathVariable Integer userId) {
+    @GetMapping
+    public ResponseEntity<?> findByUserId(HttpSession session) {
+        // 세션에서 사용자 ID 가져오기
+        Integer userId = (Integer) session.getAttribute("userId");
+        if (userId == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(ErrorResponse.of(HttpStatus.UNAUTHORIZED, "Unauthorized"));
+        }
+
         try {
             UserResponseDTO userResponseDTO = userService.findByUserId(userId);
             return new ResponseEntity<>(userResponseDTO, HttpStatus.OK);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(null); //적절한 응답으로 수정
+                    .body(ErrorResponse.of(HttpStatus.NOT_FOUND, e.getMessage()));
         }
     }
 
-    @PutMapping("/{userId}")
-    public ResponseEntity<UpdatepasswordResponseDto> updatePassword(
-            @PathVariable Integer userId,
+    @PutMapping
+    public ResponseEntity<?> updatePassword(
+            HttpSession session,
             @RequestBody UpdatePasswordRequestDto requestDto
     ) {
+        // 세션에서 사용자 ID 가져오기
+        Integer userId = (Integer) session.getAttribute("userId");
+        if (userId == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(ErrorResponse.of(HttpStatus.UNAUTHORIZED, "Unauthorized"));
+        }
+
         try {
             UpdatepasswordResponseDto updatepasswordResponseDto = userService.updatePassword(userId, requestDto);
             return new ResponseEntity<>(updatepasswordResponseDto, HttpStatus.OK);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(null); //적절한 응답으로 수정
+                    .body(ErrorResponse.of(HttpStatus.BAD_REQUEST, e.getMessage()));
         }
     }
 
@@ -78,16 +92,24 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("/{userId}")
-    public ResponseEntity<Void> deleteUser(
-            @PathVariable Integer userId,
+    @DeleteMapping
+    public ResponseEntity<?> deleteUser(
+            HttpSession session,
             @RequestBody DeleteUserRequestDto requestDto
     ) {
+        // 세션에서 사용자 ID 가져오기
+        Integer userId = (Integer) session.getAttribute("userId");
+        if (userId == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(ErrorResponse.of(HttpStatus.UNAUTHORIZED, "Unauthorized"));
+        }
+
         try {
             userService.deleteUser(userId, requestDto);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(ErrorResponse.of(HttpStatus.NOT_FOUND, e.getMessage()));
         }
     }
 }
